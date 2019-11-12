@@ -1,0 +1,59 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /ttface
+    
+spring: 
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url:  jdbc:mysql://localhost:3306/ttface?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC    #mysql8
+    username: root
+    password: 123456
+    name: test
+    type: com.alibaba.druid.pool.DruidDataSource
+    initial-size: 5
+    min-idle: 5
+    max-active: 20
+    max-wait: 30000
+    time-between-eviction-runs-millis: 60000
+    min-evictable-idle-time-millis: 300000
+    validation-query: select '1' from dual
+    test-while-idle: true
+    test-on-borrow: false
+    test-on-return: false
+    pool-prepared-statements: true
+    max-open-prepared-statements: 20
+    max-pool-prepared-statement-per-connection-size: 20
+    #filters: stat,wall,log4j
+    
+  servlet:
+      multipart:
+        # 启用
+        enabled: true
+        # 上传文件单个限制
+        max-file-size: 30MB
+        # 总限制
+        max-request-size: 100MB
+    
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*.xml
+  type-aliases-package: com.tt.face.pojo  #扫描实体类,配置xml的别名
+  configuration:
+    #这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      #逻辑删除配置
+      logic-not-delete-value: 1 #删除前
+      logic-delete-value: 0  #删除后
+
+swagger:
+  markdowns: classpath:markdown/*
+
+face:
+   searchrepo: D:\\facepic
+   picurl: D:\\facepic
+   #searchrepo: /usr/local/ttface/facepic/
+   #picurl: /usr/local/ttface/facepic/
+   comparesimilarity: 0.7
+   searchsimilarity: 0.7
